@@ -1,4 +1,5 @@
-# integration test, and should point to local CI server
+# Automation - integration test
+# Normally, it's dev server
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
