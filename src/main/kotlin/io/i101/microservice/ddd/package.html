@@ -1,0 +1,33 @@
+<html>
+<body>
+<p>
+    io.i101.library
+        io.i101.library.lang
+        io.i101.library.tv
+        io.i101.library.ddd
+    io.i101.microservice
+        io.i101.microservice.ddd
+        io.i101.microservice.account
+    io.i101.youtube
+        io.i101.youtube.streaming
+        io.i101.youtube.downloader
+</p>
+<header>Integration guides</header>
+<p>
+    - Named project, e.g youtube-app
+    - pom.xml
+        groupId => io.i101.youtube
+        artifactId => youtube-app
+        version => should start with 1.0.1-SNAPSHOT, e.g. youtube-app-1.0.1-SNAPSHOT
+</p>
+<p>
+    - Named module, e.g. streaming-microservice
+    - Rename io.i101.microservice.ddd to io.i101.[project name].[microservice name]
+    E.g A base package of streaming microservice - youtube should be io.i101.youtube.streaming
+    - pom.xml
+        groupId => io.i101.youtube
+        artifactId => streaming-microservice
+        version => should start with 1.0.1-SNAPSHOT, e.g. streaming-microservice-1.0.1-SNAPSHOT
+</p>
+</body>
+</html>

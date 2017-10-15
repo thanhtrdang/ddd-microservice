@@ -1,0 +1,111 @@
+buildscript {
+	ext {
+		// Dev
+		kotlinVersion = '1.1.51'
+		springBootVersion = '2.0.0.M5'
+		querydslVerion = '4.1.4'
+		injectVersion = '1'
+
+		// i101
+		langLibraryVersion = '1.0.1-SNAPSHOT'
+		dddLibraryVersion = '1.0.1-SNAPSHOT'
+		tvLibraryVersion = '1.0.1-SNAPSHOT'
+
+		// Test
+		restAssuredVersion = '3.0.3' 	// API client test
+		spekVersion = '1.1.5' 			// Terminal 1.1.5 - Intellij 1.1.4
+		mockitoKotlinVersion = '1.5.0' 	// Mock, stub..
+		junitPlatformVersion = '1.0.0' 	// Support Junit 5 (Spek)
+		junitVintageVersion = '4.12.1' 	// Support Junit 4 (Spring integration test)
+		kotlintestVersion = '2.0.5' 	// Good asserts: shouldBe..
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+	dependencies {
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+		classpath "org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}"
+		classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion"
+		classpath "org.junit.platform:junit-platform-gradle-plugin:${junitPlatformVersion}"
+	}
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-jpa'
+//apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'idea'
+apply plugin: 'maven'
+
+group = 'io.i101.platform'
+version = '1.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+compileKotlin {
+	kotlinOptions.jvmTarget = sourceCompatibility
+}
+compileTestKotlin {
+	kotlinOptions.jvmTarget = sourceCompatibility
+}
+
+junitPlatform {
+	filters {
+		engines {
+			include 'junit-vintage'
+			include 'spek'
+		}
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/snapshot" }
+	maven { url "https://repo.spring.io/milestone" }
+
+	mavenLocal()
+	maven { url "http://dl.bintray.com/jetbrains" }
+}
+
+dependencies {
+	// Dev
+	compile "org.springframework.boot:spring-boot-starter-data-jpa"
+	compile "org.springframework.boot:spring-boot-starter-webflux"
+	compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}"
+	compile "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
+	compile "com.querydsl:querydsl-jpa:${querydslVerion}"
+	runtime "javax.inject:javax.inject:${injectVersion}"
+	runtime "org.postgresql:postgresql"
+
+	// i101
+	compile "io.i101.library:lang-library:${langLibraryVersion}"
+	compile "io.i101.library:ddd-library:${dddLibraryVersion}"
+	compile "io.i101.library:tv-library:${tvLibraryVersion}"
+
+	// Test
+	testCompile "org.springframework.boot:spring-boot-starter-test"
+	testCompile "io.projectreactor:reactor-test"
+	testCompile "io.rest-assured:rest-assured:${restAssuredVersion}"
+	testCompile "org.jetbrains.spek:spek-api:${spekVersion}"
+	testRuntime "org.jetbrains.spek:spek-junit-platform-engine:${spekVersion}"
+	testCompile "com.nhaarman:mockito-kotlin:${mockitoKotlinVersion}"
+	testCompile "io.kotlintest:kotlintest:${kotlintestVersion}"
+	testCompile "org.junit.vintage:junit-vintage-engine:${junitVintageVersion}"
+
+	// Code gen
+	kapt "com.querydsl:querydsl-apt:${querydslVerion}:jpa" // Magic happens here
+}
+
+idea {
+	module {
+		def kaptMain = file('build/generated/source/kapt/main')
+		sourceDirs += kaptMain
+		generatedSourceDirs += kaptMain
+	}
+}
