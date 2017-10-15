@@ -1,13 +1,15 @@
 <html>
 <body>
 <p>
-    1. MainApplicationTests: Test all end-points with full Spring context app.
+    1. *Specs: Unit tests, don't need start Spring Boot, and use Spectrum Mockito AssetJ..
+    Sample *Specs only => PingServiceImplSpecs
+    Sample *Specs with mocks => PingControllerSpecs
+
+    2. MainApplicationIntegrationTests: Test all end-points with full Spring context app.
     /context/version/path => Named test: if GET /account/v1.2/profile then GET_account_v1_2_profile or `GET /account/v1.2/profile`
     If you need create new *IntegrationTests and put some endpoints in that => consider new microservice first.
 
-    2. *Specs: Unit tests, don't need start Spring Boot, and use Spectrum Mockito AssetJ..
-    Sample *Specs only => PingServiceImplSpecs
-    Sample *Specs with mocks => PingControllerSpecs
+    3. MainApplicationPerformanceTests: Define later
 </p>
 </body>
 </html>

@@ -1,0 +1,4 @@
+# Shared config, activate profiles..
+spring:
+  profiles:
+    active: local

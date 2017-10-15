@@ -12,10 +12,10 @@ import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.HttpStatus.OK
 import org.springframework.test.context.junit4.SpringRunner
 
-//@ActiveProfiles("dev")
+//@ActiveProfiles("integration")
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-class MainApplicationTests {
+class MainApplicationIntegrationTests {
 	@LocalServerPort
 	internal var port: Int = 0
 
