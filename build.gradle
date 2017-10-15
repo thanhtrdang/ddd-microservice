@@ -91,6 +91,7 @@ dependencies {
 	// Test
 	testCompile "org.springframework.boot:spring-boot-starter-test"
 	testCompile "io.projectreactor:reactor-test"
+	testCompile "org.hsqldb:hsqldb"
 	testCompile "io.rest-assured:rest-assured:${restAssuredVersion}"
 	testCompile "org.jetbrains.spek:spek-api:${spekVersion}"
 	testRuntime "org.jetbrains.spek:spek-junit-platform-engine:${spekVersion}"
