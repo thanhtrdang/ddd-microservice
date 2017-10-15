@@ -12,6 +12,7 @@ import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.HttpStatus.OK
 import org.springframework.test.context.junit4.SpringRunner
 
+//@ActiveProfiles("dev")
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class MainApplicationTests {

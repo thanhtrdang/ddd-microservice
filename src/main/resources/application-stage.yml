@@ -1,0 +1,10 @@
+# Demo, beta...
+spring:
+  datasource:
+    url: blah
+    username: blah
+    password: blah
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    generate-ddl: false
+    show-sql: false
