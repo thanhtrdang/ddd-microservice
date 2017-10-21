@@ -19,7 +19,7 @@ object PingControllerSpecs: Spek({
             on { ping() } doReturn Mono.just(pingResult)
         }
         val pingRepositoryMock = mock<PingRepository> {
-            on { findXXX() } doAnswer {}
+            on { findXXX() } doAnswer { null }
         }
 
         val pingController = PingController(pingRepositoryMock, pingServiceMock)

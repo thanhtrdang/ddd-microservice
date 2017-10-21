@@ -8,5 +8,5 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "PING_TBL")
-open class PingEntity (@Id override val id: String = IDGenerator.next, val name: String, val age: Int):
+open class PingEntity(@Id override val id: String = IDGenerator.next, val name: String, val age: Int):
         EntitySupport<PingEntity, String>()

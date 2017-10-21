@@ -11,18 +11,20 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @ComponentScan("io.i101.microservice.ddd", lazyInit = true)
 @EnableJpaRepositories
 @EnableTransactionManagement
-class MainApplication
+class MainApplication(context: ApplicationContext) {
+    init { _springContext = context }
+}
 fun main(args: Array<String>) {
-    SpringContainer.context = SpringApplication.run(MainApplication::class.java, *args)
+    SpringApplication.run(MainApplication::class.java, *args)
 }
 
 /**
- * Kotlin 1.2: Replace this object by <code>private lateinit var springContext: ApplicationContext</code>
+ * Kotlin 1.2: Replace this object by <code>private lateinit var _springContext: ApplicationContext</code>
  */
-private object SpringContainer {
-    lateinit var context: ApplicationContext
-}
+private var _springContext: ApplicationContext? = null
 /**
  * @param clazz T::class.java
  */
-fun <T> springBean(clazz: Class<T>): T = SpringContainer.context.getBean(clazz)
+fun <T> springBean(clazz: Class<T>): T {
+    return _springContext!!.getBean(clazz)
+}
