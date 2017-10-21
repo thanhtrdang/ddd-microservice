@@ -3,15 +3,17 @@ package io.i101.microservice.ddd
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.ApplicationContext
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @SpringBootApplication
-@EnableJpaRepositories("io.i101.microservice.ddd.infrastructure.persistence")
+@ComponentScan("io.i101.microservice.ddd", lazyInit = true)
+@EnableJpaRepositories
 @EnableTransactionManagement
 class MainApplication
 fun main(args: Array<String>) {
-    SpringApplication.run(MainApplication::class.java, *args)
+    SpringContainer.context = SpringApplication.run(MainApplication::class.java, *args)
 }
 
 /**

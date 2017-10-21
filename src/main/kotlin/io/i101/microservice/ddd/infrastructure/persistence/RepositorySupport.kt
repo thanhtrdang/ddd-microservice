@@ -4,6 +4,7 @@ import com.querydsl.core.types.Predicate
 import com.querydsl.jpa.JPQLQuery
 import io.i101.library.ddd.Entity
 import io.i101.library.ddd.Repository
+import io.i101.microservice.ddd.springBean
 import org.springframework.data.jpa.repository.support.JpaEntityInformation
 import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport.getEntityInformation
 import org.springframework.data.jpa.repository.support.QuerydslJpaRepository
@@ -12,7 +13,7 @@ import java.io.Serializable
 import javax.persistence.EntityManager
 
 @Suppress("UNCHECKED_CAST")
-abstract class RepositorySupport<T: Entity<T, ID>, ID: Serializable>(aggregateRootClass: Class<T>, entityManager: EntityManager):
+abstract class RepositorySupport<T: Entity<T, ID>, ID: Serializable>(aggregateRootClass: Class<T>, entityManager: EntityManager = springBean(EntityManager::class.java)):
         QuerydslJpaRepository<T, ID>(getEntityInformation<T>(aggregateRootClass, entityManager) as JpaEntityInformation<T, ID>, entityManager),
         Repository<T, ID> {
 
@@ -20,7 +21,6 @@ abstract class RepositorySupport<T: Entity<T, ID>, ID: Serializable>(aggregateRo
         return@defer Mono.justOrEmpty(findById(id))
     }
 
-    //@Transactional
     override final fun store(entity: T): Mono<T> = Mono.defer {
         return@defer Mono.justOrEmpty(saveAndFlush(entity))
     }

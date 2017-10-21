@@ -4,18 +4,17 @@ import io.i101.microservice.ddd.domain.model.ping.PingEntity
 import io.i101.microservice.ddd.domain.model.ping.PingRepository
 import io.i101.microservice.ddd.domain.model.ping.QPingEntity.pingEntity
 import org.springframework.stereotype.Repository
-import javax.persistence.EntityManager
 
 @Repository
-class PingRepositoryImpl(entityManager: EntityManager): RepositorySupport<PingEntity, String>(PingEntity::class.java, entityManager),
+class PingRepositoryImpl: RepositorySupport<PingEntity, String>(PingEntity::class.java),
         PingRepository {
 
-    override fun findXXX() {
-        pingEntity.apply {
-            val x = createQuery(id.eq("1506341767330000"))
-                    .fetchOne()
+    override fun findXXX(): PingEntity = with(pingEntity) {
+        val ping = createQuery(id.eq("1506341767330000"))
+                .fetchOne()
 
-            println(x?.name)
-        }
+        println(ping?.name)
+
+        return ping
     }
 }
