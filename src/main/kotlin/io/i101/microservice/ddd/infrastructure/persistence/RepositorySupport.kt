@@ -1,5 +1,7 @@
 package io.i101.microservice.ddd.infrastructure.persistence
 
+import com.querydsl.core.types.Predicate
+import com.querydsl.jpa.JPQLQuery
 import io.i101.library.ddd.Entity
 import io.i101.library.ddd.Repository
 import org.springframework.data.jpa.repository.support.JpaEntityInformation
@@ -14,13 +16,25 @@ abstract class RepositorySupport<T: Entity<T, ID>, ID: Serializable>(aggregateRo
         QuerydslJpaRepository<T, ID>(getEntityInformation<T>(aggregateRootClass, entityManager) as JpaEntityInformation<T, ID>, entityManager),
         Repository<T, ID> {
 
-    override final fun find(id: ID): Mono<T> {
-        return Mono.justOrEmpty(findById(id))
+    override final fun find(id: ID): Mono<T> = Mono.defer {
+        return@defer Mono.justOrEmpty(findById(id))
     }
 
     //@Transactional
-    override final fun store(entity: T): Mono<T> {
-        return Mono.justOrEmpty(saveAndFlush(entity))
+    override final fun store(entity: T): Mono<T> = Mono.defer {
+        return@defer Mono.justOrEmpty(saveAndFlush(entity))
     }
 
+// TODO - Define later
+//    final fun find(predicate: Predicate): Mono<T> = Mono.defer {
+//        return@defer Mono.justOrEmpty(findOne(predicate))
+//    }
+
+    override final fun createQuery(vararg predicate: Predicate): JPQLQuery<T> {
+        return super.createQuery(*predicate) as JPQLQuery<T>
+    }
+
+    override final fun createCountQuery(vararg predicate: Predicate): JPQLQuery<T> {
+        return super.createCountQuery(*predicate) as JPQLQuery<T>
+    }
 }

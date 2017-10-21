@@ -25,11 +25,11 @@ buildscript {
 		maven { url "https://repo.spring.io/milestone" }
 	}
 	dependencies {
-		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
-		classpath "org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}"
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+		classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
 		classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion"
-		classpath "org.junit.platform:junit-platform-gradle-plugin:${junitPlatformVersion}"
+		classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
 	}
 }
 
@@ -48,28 +48,34 @@ group = 'io.i101.microservice'
 version = '1.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
+idea {
+	module {
+		def kaptMain = file('build/generated/source/kapt/main')
+		sourceDirs += kaptMain
+		generatedSourceDirs += kaptMain
+	}
+}
 compileKotlin {
 	kotlinOptions.jvmTarget = sourceCompatibility
 }
 compileTestKotlin {
 	kotlinOptions.jvmTarget = sourceCompatibility
 }
-
 junitPlatform {
 	filters {
 		engines {
-			include 'junit-vintage'
 			include 'spek'
+			include 'junit-vintage'
 		}
 	}
 }
 
 repositories {
 	mavenCentral()
+	mavenLocal()
+
 	maven { url "https://repo.spring.io/snapshot" }
 	maven { url "https://repo.spring.io/milestone" }
-
-	mavenLocal()
 	maven { url "http://dl.bintray.com/jetbrains" }
 }
 
@@ -77,36 +83,28 @@ dependencies {
 	// Dev
 	compile "org.springframework.boot:spring-boot-starter-data-jpa"
 	compile "org.springframework.boot:spring-boot-starter-webflux"
-	compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}"
-	compile "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
-	compile "com.querydsl:querydsl-jpa:${querydslVerion}"
-	runtime "javax.inject:javax.inject:${injectVersion}"
+	compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
+	compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+	compile "com.querydsl:querydsl-jpa:$querydslVerion"
+	runtime "javax.inject:javax.inject:$injectVersion"
 	runtime "org.postgresql:postgresql"
 
 	// i101
-	compile "io.i101.library:lang-library:${langLibraryVersion}"
-	compile "io.i101.library:ddd-library:${dddLibraryVersion}"
-	compile "io.i101.library:tv-library:${tvLibraryVersion}"
+	compile "io.i101.library:lang-library:$langLibraryVersion"
+	compile "io.i101.library:ddd-library:$dddLibraryVersion"
+	compile "io.i101.library:tv-library:$tvLibraryVersion"
 
 	// Test
 	testCompile "org.springframework.boot:spring-boot-starter-test"
 	testCompile "io.projectreactor:reactor-test"
 	testCompile "org.hsqldb:hsqldb"
-	testCompile "io.rest-assured:rest-assured:${restAssuredVersion}"
-	testCompile "org.jetbrains.spek:spek-api:${spekVersion}"
-	testRuntime "org.jetbrains.spek:spek-junit-platform-engine:${spekVersion}"
-	testCompile "com.nhaarman:mockito-kotlin:${mockitoKotlinVersion}"
-	testCompile "io.kotlintest:kotlintest:${kotlintestVersion}"
-	testCompile "org.junit.vintage:junit-vintage-engine:${junitVintageVersion}"
+	testCompile "io.rest-assured:rest-assured:$restAssuredVersion"
+	testCompile "org.jetbrains.spek:spek-api:$spekVersion"
+	testRuntime "org.jetbrains.spek:spek-junit-platform-engine:$spekVersion"
+	testCompile "com.nhaarman:mockito-kotlin:$mockitoKotlinVersion"
+	testCompile "io.kotlintest:kotlintest:$kotlintestVersion"
+	testCompile "org.junit.vintage:junit-vintage-engine:$junitVintageVersion"
 
 	// Code gen
-	kapt "com.querydsl:querydsl-apt:${querydslVerion}:jpa" // Magic happens here
-}
-
-idea {
-	module {
-		def kaptMain = file('build/generated/source/kapt/main')
-		sourceDirs += kaptMain
-		generatedSourceDirs += kaptMain
-	}
+	kapt "com.querydsl:querydsl-apt:$querydslVerion:jpa" // Magic happens here
 }
