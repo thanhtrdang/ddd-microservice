@@ -32,7 +32,7 @@ class MainApplicationIntegrationTests {
 	}
 
 	@Test
-	fun GET_ping() {
+	fun GET_ping_ping() {
 		get(ping_ping)
 				.then()
 				.statusCode(OK.value())
@@ -40,7 +40,7 @@ class MainApplicationIntegrationTests {
 	}
 
 	@Test
-	fun GET_find() {
+	fun GET_ping_find() {
 		get(ping_find, "0001508662774334")
 				.then()
 				.statusCode(OK.value())
@@ -48,7 +48,7 @@ class MainApplicationIntegrationTests {
 	}
 
 	@Test
-	fun POST_store() {
+	fun POST_ping_store() {
 		post(ping_store)
 				.then()
 				.statusCode(OK.value())
