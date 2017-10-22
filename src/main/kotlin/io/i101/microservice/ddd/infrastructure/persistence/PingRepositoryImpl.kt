@@ -9,11 +9,20 @@ import org.springframework.stereotype.Repository
 class PingRepositoryImpl: RepositorySupport<PingEntity, String>(PingEntity::class.java),
         PingRepository {
 
-    override fun findXXX(): PingEntity = with(pingEntity) {
-        val ping = createQuery(id.eq("1506341767330000"))
+    override fun findEntity(): PingEntity = with(pingEntity) {
+        val ping = createQuery(id.eq("0001508662774334"))
                 .fetchOne()
 
-        println(ping?.name)
+        println("${ping?.name} - ${ping?.email?.value}")
+
+        return ping
+    }
+
+    override fun findValueObject(): PingEntity = with(pingEntity) {
+        val ping = createQuery(email.value.eq("thanhtrdang@gmail.com"))
+                .fetchOne()
+
+        println("${ping?.name} - ${ping?.email?.value}")
 
         return ping
     }
