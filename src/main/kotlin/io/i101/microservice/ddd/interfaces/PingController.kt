@@ -7,6 +7,7 @@ import io.i101.microservice.ddd.domain.model.ping.PingRepository
 import io.i101.microservice.ddd.domain.model.ping.PingValueObject
 import io.i101.microservice.ddd.interfaces.Endpoint.namespace
 import io.i101.microservice.ddd.interfaces.Endpoint.ping_find
+import io.i101.microservice.ddd.interfaces.Endpoint.ping_ping
 import io.i101.microservice.ddd.interfaces.Endpoint.ping_store
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
@@ -15,7 +16,7 @@ import java.util.*
 @RestController
 @RequestMapping(namespace)
 class PingController(val pingRepository: PingRepository, val pingService: PingService) {
-    @GetMapping(Endpoint.ping_ping)
+    @GetMapping(ping_ping)
     fun ping(): Mono<String> {
         return pingService.ping()
     }

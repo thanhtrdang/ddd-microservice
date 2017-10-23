@@ -1,6 +1,9 @@
 # ddd-microservice
 Fix starting Netty error: https://thoeni.io/post/macos-sierra-java/
 Fix terminal JUnit 4+5: https://github.com/junit-team/junit5-samples/tree/master/junit5-gradle-consumer
+https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html
+https://flywaydb.org
+www.liquibase.org
 
 - Improve the template with some dummies - service, repository..
 - Improve sample *Specs: DB, Cache, External Integrations.. So when we ping the microservice, if return pong, then we ensure all configurations correctly.
