@@ -20,10 +20,10 @@ fun main(args: Array<String>) {
 /**
  * Kotlin 1.2: Replace this object by <code>private lateinit var _springContext: ApplicationContext</code>
  */
-private var _springContext: ApplicationContext? = null
+private lateinit var _springContext: ApplicationContext
 /**
  * @param clazz T::class.java
  */
 fun <T> springBean(clazz: Class<T>): T {
-    return _springContext!!.getBean(clazz)
+    return _springContext.getBean(clazz)
 }
