@@ -10,6 +10,7 @@ www.liquibase.org
 - Apply Maven parent
 - Deploy and apply AWS, Spring Cloud
 - Isolate running test types: Integration, Unit, Stress.. 
+- Exclude *.html, *.proto.. from the final build.
 
 cd ${project root}
 gradle build

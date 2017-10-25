@@ -92,6 +92,9 @@ dependencies {
 	runtime "javax.inject:javax.inject:$injectVersion"
 	runtime "org.postgresql:postgresql"
 
+	// Experimental
+//	compile "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:0.19.2"
+
 	// i101
 	compile "io.i101.library:lang-library:$langLibraryVersion"
 	compile "io.i101.library:ddd-library:$dddLibraryVersion"

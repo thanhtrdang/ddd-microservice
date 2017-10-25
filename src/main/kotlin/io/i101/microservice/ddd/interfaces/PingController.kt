@@ -22,16 +22,20 @@ class PingController(val pingRepository: PingRepository, val pingService: PingSe
     }
 
     @GetMapping(ping_find)
-    fun find(@PathVariable id: String): Mono<PingEntity> {
-        return pingRepository.find(id)
+    fun find(@PathVariable id: String): Mono<PingAdapter> {
+        return pingRepository
+                .find(id)
+                .map { PingAdapter(it) }
     }
 
     @PostMapping(ping_store)
-    fun store(): Mono<PingEntity> {
+    fun store(): Mono<PingAdapter> {
         val age = Random().nextInt(100)
         val pingValueObject = PingValueObject("thanhtrdang$age@gmail.com")
         val pingEntity = PingEntity(name = IDGenerator.next, age = age, email = pingValueObject)
 
-        return pingRepository.store(pingEntity)
+        return pingRepository
+                .store(pingEntity)
+                .map { PingAdapter(it) }
     }
 }

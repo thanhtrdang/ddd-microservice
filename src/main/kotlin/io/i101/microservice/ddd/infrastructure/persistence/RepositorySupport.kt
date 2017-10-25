@@ -25,7 +25,7 @@ abstract class RepositorySupport<T: Entity<T, ID>, ID: Serializable>(aggregateRo
         return@defer Mono.justOrEmpty(saveAndFlush(entity))
     }
 
-// TODO - Define later
+// TODO - Define later, see ReactiveSortingRepository
 //    final fun find(predicate: Predicate): Mono<T> = Mono.defer {
 //        return@defer Mono.justOrEmpty(findOne(predicate))
 //    }
