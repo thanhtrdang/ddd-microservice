@@ -11,6 +11,7 @@ www.liquibase.org
 - Deploy and apply AWS, Spring Cloud
 - Isolate running test types: Integration, Unit, Stress.. 
 - Exclude *.html, *.proto.. from the final build.
+- Common error handler
 
 cd ${project root}
 gradle build

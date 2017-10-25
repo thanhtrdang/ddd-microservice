@@ -9,8 +9,12 @@ import io.i101.microservice.ddd.interfaces.Endpoint.namespace
 import io.i101.microservice.ddd.interfaces.Endpoint.ping_find
 import io.i101.microservice.ddd.interfaces.Endpoint.ping_ping
 import io.i101.microservice.ddd.interfaces.Endpoint.ping_store
+import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
+import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.*
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
+import reactor.core.publisher.Mono.just
 import java.util.*
 
 @RestController
@@ -22,20 +26,24 @@ class PingController(val pingRepository: PingRepository, val pingService: PingSe
     }
 
     @GetMapping(ping_find)
-    fun find(@PathVariable id: String): Mono<PingAdapter> {
+    fun find(@PathVariable id: String): Mono<ResponseEntity<PingAdapter>> {
         return pingRepository
                 .find(id)
-                .map { PingAdapter(it) }
+                .map { ok(PingAdapter(it)) }
+                .switchIfEmpty(just(noContent().build()))
+                .onErrorReturn(status(INTERNAL_SERVER_ERROR).build())
     }
 
     @PostMapping(ping_store)
-    fun store(): Mono<PingAdapter> {
+    fun store(): Mono<ResponseEntity<PingAdapter>> {
         val age = Random().nextInt(100)
         val pingValueObject = PingValueObject("thanhtrdang$age@gmail.com")
         val pingEntity = PingEntity(name = IDGenerator.next, age = age, email = pingValueObject)
 
         return pingRepository
                 .store(pingEntity)
-                .map { PingAdapter(it) }
+                .map { ok(PingAdapter(it)) }
+                .switchIfEmpty(just(noContent().build()))
+                .onErrorReturn(status(INTERNAL_SERVER_ERROR).build())
     }
 }

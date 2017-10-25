@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.HttpStatus.OK
-import org.springframework.test.context.ActiveProfiles
+import org.springframework.http.HttpStatus.NO_CONTENT
 import org.springframework.test.context.junit4.SpringRunner
 
 //@ActiveProfiles("dev")
@@ -43,7 +43,7 @@ class MainApplicationIntegrationTests {
 	fun GET_ping_find() {
 		get(ping_find, "0001508662774334")
 				.then()
-				.statusCode(OK.value())
+				.statusCode(NO_CONTENT.value())
 //				.body(equalTo("{\"id\":\"0001508662774334\",\"name\":\"0001508662774333\",\"age\":98,\"email\":{\"value\":\"thanhtrdang98@gmail.com\",\"domain\":\"gmail.com\",\"localPart\":\"thanhtrdang98\"}}"))
 	}
 
