@@ -25,8 +25,7 @@ class PingController(val pingRepository: PingRepository, val pingService: PingSe
         return pingService.ping()
     }
 
-    @GetMapping(ping_find, produces = arrayOf("application/x-protobuf"))
-//    @GetMapping(ping_find)
+    @GetMapping(ping_find)
     fun find(@PathVariable id: String): Mono<ResponseEntity<PingAdapter>> {
         return pingRepository
                 .find(id)
