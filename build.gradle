@@ -3,6 +3,7 @@ buildscript {
 		// Dev
 		kotlinVersion = '1.2.0-beta-88'
 		springBootVersion = '2.0.0.M5'
+		wireVersion = '2.3.0-RC1'
 		querydslVerion = '4.1.4'
 		injectVersion = '1'
 
@@ -10,6 +11,7 @@ buildscript {
 		langLibraryVersion = '1.0.1-SNAPSHOT'
 		dddLibraryVersion = '1.0.1-SNAPSHOT'
 		tvLibraryVersion = '1.0.1-SNAPSHOT'
+		protobufLibraryVersion = '1.0.1-SNAPSHOT'
 
 		// Test
 		restAssuredVersion = '3.0.3' 	// API client test
@@ -88,7 +90,7 @@ dependencies {
 	compile "org.springframework.boot:spring-boot-starter-webflux"
 	compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion"
 	compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-
+	compile "com.squareup.wire:wire-runtime:$wireVersion"
 	compile "com.querydsl:querydsl-jpa:$querydslVerion"
 	runtime "javax.inject:javax.inject:$injectVersion"
 	runtime "org.postgresql:postgresql"
@@ -99,6 +101,7 @@ dependencies {
 	compile "io.i101.library:lang-library:$langLibraryVersion"
 	compile "io.i101.library:ddd-library:$dddLibraryVersion"
 	compile "io.i101.library:tv-library:$tvLibraryVersion"
+//TODO	compile "io.i101.library:proto-library:$protobufLibraryVersion"
 
 	// Test
 	testCompile "org.springframework.boot:spring-boot-starter-test"

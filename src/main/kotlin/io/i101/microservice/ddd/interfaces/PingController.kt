@@ -10,6 +10,7 @@ import io.i101.microservice.ddd.interfaces.Endpoint.ping_find
 import io.i101.microservice.ddd.interfaces.Endpoint.ping_ping
 import io.i101.microservice.ddd.interfaces.Endpoint.ping_store
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
+import org.springframework.http.MediaType.TEXT_PLAIN_VALUE
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.*
 import org.springframework.web.bind.annotation.*
@@ -25,24 +26,24 @@ class PingController(val pingRepository: PingRepository, val pingService: PingSe
         return pingService.ping()
     }
 
-    @GetMapping(ping_find)
-    fun find(@PathVariable id: String): Mono<ResponseEntity<PingAdapter>> {
+    @GetMapping(ping_find, produces = ["application/x-protobuf", TEXT_PLAIN_VALUE])
+    fun find(@PathVariable id: String): Mono<ResponseEntity<PingEncoder>> {
         return pingRepository
                 .find(id)
-                .map { ok(PingAdapter(it)) }
+                .map { ok(PingEncoder(it)) }
                 .switchIfEmpty(just(noContent().build()))
                 .onErrorReturn(status(INTERNAL_SERVER_ERROR).build())
     }
 
-    @PostMapping(ping_store)
-    fun store(): Mono<ResponseEntity<PingAdapter>> {
+    @PostMapping(ping_store, produces = ["application/x-protobuf", TEXT_PLAIN_VALUE])
+    fun store(): Mono<ResponseEntity<PingEncoder>> {
         val age = Random().nextInt(100)
-        val pingValueObject = PingValueObject("thanhtrdang$age@gmail.com")
+        val pingValueObject = PingValueObject("thanhtrdang${age + 1}@gmail.com")
         val pingEntity = PingEntity(name = IDGenerator.next, age = age, email = pingValueObject)
 
         return pingRepository
                 .store(pingEntity)
-                .map { ok(PingAdapter(it)) }
+                .map { ok(PingEncoder(it)) }
                 .switchIfEmpty(just(noContent().build()))
                 .onErrorReturn(status(INTERNAL_SERVER_ERROR).build())
     }
