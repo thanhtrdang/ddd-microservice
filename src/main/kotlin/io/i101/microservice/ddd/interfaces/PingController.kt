@@ -9,10 +9,13 @@ import io.i101.microservice.ddd.interfaces.Endpoint.namespace
 import io.i101.microservice.ddd.interfaces.Endpoint.ping_find
 import io.i101.microservice.ddd.interfaces.Endpoint.ping_ping
 import io.i101.microservice.ddd.interfaces.Endpoint.ping_store
+import io.i101.microservice.ddd.interfaces.Endpoint.ping_stream
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
+import org.springframework.http.MediaType.APPLICATION_STREAM_JSON_VALUE
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.*
 import org.springframework.web.bind.annotation.*
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.Mono.just
 import java.util.*
@@ -45,5 +48,12 @@ class PingController(val pingRepository: PingRepository, val pingService: PingSe
                 .map { ok(PingAdapter(it)) }
                 .switchIfEmpty(just(noContent().build()))
                 .onErrorReturn(status(INTERNAL_SERVER_ERROR).build())
+    }
+
+    @GetMapping(ping_stream, produces = [APPLICATION_STREAM_JSON_VALUE])
+    fun stream(): ResponseEntity<Flux<PingAdapter>> {
+        return ok(pingRepository
+                .findAllEntity()
+                .map { PingAdapter(it) })
     }
 }

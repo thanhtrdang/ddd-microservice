@@ -4,6 +4,8 @@ import io.i101.microservice.ddd.domain.model.ping.PingEntity
 import io.i101.microservice.ddd.domain.model.ping.PingRepository
 import io.i101.microservice.ddd.domain.model.ping.QPingEntity.pingEntity
 import org.springframework.stereotype.Repository
+import reactor.core.publisher.Flux
+import reactor.core.publisher.toFlux
 
 @Repository
 class PingRepositoryImpl: RepositorySupport<PingEntity, String>(PingEntity::class.java),
@@ -25,5 +27,9 @@ class PingRepositoryImpl: RepositorySupport<PingEntity, String>(PingEntity::clas
         println("${ping?.name} - ${ping?.email?.value}")
 
         return ping
+    }
+
+    override fun findAllEntity(): Flux<PingEntity> = Flux.defer {
+        return@defer findAll().toFlux()
     }
 }
